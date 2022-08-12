@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities; 
+/* 위에꺼는 아님 거슬리면 vscode 확장자 중에 오류 없애주는거 있다고 함 */
+
 html,
 body {
   padding: 0;
