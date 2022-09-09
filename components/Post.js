@@ -1,0 +1,84 @@
+import axios from "axios";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
+import { v4 as uuidv4 } from 'uuid';
+
+export default function PostForm() {
+    const [post, setPost] = useState({ // id는 글을 쓴 이후 생성.
+        postTitle: "",
+        postMain: "",
+    });
+    const router = useRouter();
+
+    const handleChange = ({ target: { postTitle, value } }) =>
+        setPost({ ...post, [postTitle]: value });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            post.postId= uuidv4();
+            post.postTime= new Date().getTime();
+            await axios.post(`https://6ef31a81-4ac0-4a05-b01b-ba5853c9cddd.mock.pstmn.io/api/edit`,{
+                body: JSON.stringify({
+                    postId:post.postId,
+                    postTitle:post.postTitle,
+                    postMain:post.postMain,
+                    postTime:post.postTime,
+                }),
+                headers: { "Content-Type": `application/json`}
+            });
+            toast.success("저장되었습니다.", {
+                position:"bottom-right"
+            });
+            router.push("/information/notice");
+
+        } catch (error) {
+            console.error(error);
+            toast.error(error.response.data.message);
+        }
+    };
+
+
+    return (
+        <div>
+            <form
+                onSubmit={handleSubmit}
+            >
+                <div>
+                    <label htmlFor="postTitle">
+                        Post title
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="Title"
+                        id="postTitle"
+                        title="postTitle"
+                        onChange={handleChange}
+                        value={post.postTitle}
+                    />
+                </div>
+
+
+                <div>
+                    <label
+                        htmlFor="postMain"
+                    >
+                        Write a main
+                    </label>
+                    <input
+                        title="postMain"
+                        id="postMain"
+                        placeholder="Main"
+                        onChange={handleChange}
+                        value={post.postMain}
+                    ></input>
+                </div>
+
+                <button>
+                    Save Post
+                </button>
+            </form>
+        </div>
+    );
+};
