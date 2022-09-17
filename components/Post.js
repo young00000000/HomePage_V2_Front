@@ -11,15 +11,16 @@ export default function PostForm() {
     });
     const router = useRouter();
 
-    const handleChange = ({ target: { postTitle, value } }) =>
-        setPost({ ...post, [postTitle]: value });
+    const handleChange = ({ target: { name, value } }) =>
+        setPost({ ...post, [name]: value });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+
             post.postId= uuidv4();
             post.postTime= new Date().getTime();
-            await axios.post(`https://6ef31a81-4ac0-4a05-b01b-ba5853c9cddd.mock.pstmn.io/api/edit`,{
+            await axios.post(`/api/edit`,{
                 body: JSON.stringify({
                     postId:post.postId,
                     postTitle:post.postTitle,
@@ -53,7 +54,7 @@ export default function PostForm() {
                         type="text"
                         placeholder="Title"
                         id="postTitle"
-                        title="postTitle"
+                        name="postTitle"
                         onChange={handleChange}
                         value={post.postTitle}
                     />
@@ -67,7 +68,7 @@ export default function PostForm() {
                         Write a main
                     </label>
                     <input
-                        title="postMain"
+                        name="postMain"
                         id="postMain"
                         placeholder="Main"
                         onChange={handleChange}
