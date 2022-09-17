@@ -20,7 +20,7 @@ export default function PostForm() {
 
             post.postId= uuidv4();
             post.postTime= new Date().getTime();
-            await axios.post(`/api/edit`,{
+            await axios.post(`https://6ef31a81-4ac0-4a05-b01b-ba5853c9cddd.mock.pstmn.io/api/edit`,{
                 body: JSON.stringify({
                     postId:post.postId,
                     postTitle:post.postTitle,
