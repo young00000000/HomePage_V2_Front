@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { v4 as uuidv4 } from 'uuid';
 
 export default function PostForm() {
-    const [post, setPost] = useState({ // id는 글을 쓴 이후 생성.
+    const [post, setPost] = useState({
         postTitle: "",
         postMain: "",
     });
@@ -29,7 +29,7 @@ export default function PostForm() {
                 }),
                 headers: { "Content-Type": `application/json`}
             });
-            toast.success("저장되었습니다.", {
+            toast.success("저장되었습니다.", { //으잉 왜 이건 안되냐
                 position:"bottom-right"
             });
             router.push("/information/notice");
